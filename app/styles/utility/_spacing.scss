@@ -1,0 +1,80 @@
+$alignments: center, left, right;
+$floats: left, right;
+$properties: margin, padding;
+
+$sides: 'bottom', 'horizontal', 'left', 'right', 'top', 'vertical';
+$spacings: ('x-lg', 1.875rem), ('lg', 1.25rem), ('sm', .3125rem), ('tiny', .0625rem), ('reg', .625rem), ('auto', auto);
+
+@each $align in $alignments {
+  .align-#{$align} {
+    text-align: $align;
+  }
+}
+
+@each $float in $floats {
+  .float-#{$float} {
+    float: $float;
+  }
+}
+
+@each $property in $properties {
+  .no-#{$property} {
+    #{$property}: 0;
+  }
+}
+
+@each $side in $sides {
+  .#{$side} {
+    @each $size, $rem in $spacings {
+      $interp: if($size == '', '', '-#{$size}');
+
+      &#{$interp}-spacer {
+        @if $side == 'horizontal' {
+          margin: 0 $rem;
+        } @else if $side == 'vertical' {
+          margin: $rem 0;
+        } @else {
+          margin-#{$side}: $rem;
+        }
+      }
+
+      &#{$interp}-padding {
+        @if $side == 'horizontal' {
+          padding: 0 $rem;
+        } @else if $side == 'vertical' {
+          padding: $rem 0;
+        } @else {
+          padding-#{$side}: $rem;
+        }
+      }
+    }
+  }
+
+  .#{$side} {
+    &-border {
+      @if $side == 'horizontal' {
+        border-bottom: .0625rem solid $black;
+        border-top: .0625rem solid $black;
+      } @else if $side == 'vertical' {
+        border-left: .0625rem solid $black;
+        border-right: .0625rem solid $black;
+      } @else {
+        border-#{$side}: .0625rem solid $black;
+      }
+    }
+  }
+}
+
+@each $size, $rem in $spacings {
+  $interp: if($size == '', '', '#{$size}-');
+
+  .#{$interp} {
+    &padding {
+      padding: $rem;
+    }
+
+    &spacer {
+      margin: $rem;
+    }
+  }
+}

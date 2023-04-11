@@ -1,0 +1,121 @@
+.user-role-manager {
+  @include display-flex;
+  @include flex-direction(row);
+
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  width: inherit;
+  z-index: 1;
+
+  .add-role {
+    @include border-radius(.5rem);
+    @include display-flex;
+    @include transition(all .3s);
+
+    align-items: center;
+    background-color: transparent;
+    border: 0;
+    height: 1.5rem;
+    width: 1.5rem;
+
+    &.open {
+      background-color: rgba($skillet, .75);
+      color: $white;
+    }
+  }
+
+  .unassigned-role-list {
+    @include border-radius(.5rem);
+    @include box-shadow(
+      0 .125rem .0625rem -.0625rem rgba(0, 0, 0, .2),
+      0 .0625rem .0625rem 0 rgba(0, 0, 0, .14),
+      0 .0625rem .1875rem 0 rgba(0, 0, 0, .12)
+    );
+
+    background-color: $white;
+    border: .0625rem solid $barely-gray;
+    display: none;
+    left: 90%;
+    min-height: 2rem;
+    margin: 0;
+    padding: .75rem;
+    position: absolute;
+    top: 85%;
+    width: 10rem;
+    z-index: 2;
+
+    &.open {
+      display: block;
+    }
+
+    .add-role-trigger {
+      background-color: transparent;
+      border: 0;
+      word-break: keep-all;
+    }
+
+    .unassigned-role-item {
+      @include border-radius(.5rem);
+      @include transition(all .3s);
+
+      cursor: pointer;
+      font-size: 1.25rem;
+      font-weight: bold;
+      border-bottom: .0625rem solid $barely-gray;
+      padding: .5rem 0;
+      text-align: left;
+
+      &:hover {
+        background-color: rgba($skillet, .75);
+
+        button {
+          color: $white;
+        }
+      }
+
+      &:last-of-type {
+        border: 0;
+      }
+
+      button {
+        display: block;
+        font-size: 1rem;
+        height: inherit;
+        text-align: left;
+        width: 100%;
+      }
+    }
+  }
+
+  .user-roles {
+    @include display-flex;
+    @include flex-direction(row);
+  
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+    width: inherit;
+  
+    .role {
+      @include border-radius(1rem);
+  
+      background-color: rgba($skillet, .75);
+      color: $white;
+      margin: .25rem .75rem;
+      min-width: 3rem;
+      padding: .75rem .75rem;
+      text-align: center;
+  
+      &.removable {
+        cursor: pointer;
+        text-align: left;
+  
+        & > .fa-times-circle {
+          margin-left: .75rem;
+        }
+      }
+    }
+  }
+}
+

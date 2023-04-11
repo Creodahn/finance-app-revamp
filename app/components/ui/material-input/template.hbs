@@ -1,0 +1,16 @@
+<div class="material-input" data-test-material-input-container={{@input-id}}>
+  <Input
+    @type={{@type}}
+    @value={{this.value}}
+
+    class={{if this.value "stay-focused"}}
+    data-test-material-input
+    id={{@input-id}}
+    required={{@required}}
+    
+    {{on "change" this.update}}
+  />
+  <label data-test-material-input-label for={{@input-id}}>
+    {{@label}}
+  </label>
+</div>

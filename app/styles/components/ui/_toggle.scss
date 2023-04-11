@@ -1,0 +1,41 @@
+.toggle {
+  @include border-radius(.5rem);
+  @include transition(all .3s);
+
+  background-color: $gray;
+  border: .0625rem solid $gray;
+  cursor: pointer;
+  height: 1rem;
+  position: relative;
+  width: 2.25rem;
+  z-index: 1;
+
+  &::before {
+    @include border-radius(50%);
+    @include box-shadow(-.0625rem .0625rem 0 0 rgba(0, 0, 0, .15));
+    @include transition(all .3s);
+
+    background-color: $white;
+    border: .0625rem solid $barely-gray;
+    content: '';
+    height: 1.5rem;
+    left: -.375rem;
+    position: absolute;
+    width: 1.5rem;
+    top: -.375rem;
+    z-index: 2;
+  }
+
+  &.on {
+    &.danger {
+      background-color: $bright-red;
+      border-color: $bright-red;
+    }
+
+    &::before {
+      @include box-shadow(.0625rem .0625rem 0 0 rgba(0, 0, 0, .15));
+
+      left: calc(100% - 1.125rem);
+    }
+  }
+}

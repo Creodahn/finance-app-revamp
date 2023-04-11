@@ -1,0 +1,35 @@
+.pagination-controls {
+  margin: .75rem auto 0;
+  width: 100%;
+
+  &,
+  & > .pagination-readout {
+    @include display-flex;
+    @include flex-direction(row);
+
+    align-items: center;
+    justify-content: center;
+  }
+  
+  & > .pagination-readout {
+    margin: 0 1rem;
+
+    & > .material-input {
+      min-width: 2.5rem;
+    }
+
+    & > .page-indicator {
+      margin-right: 2rem;
+    }
+  }
+
+  & > .pagination-btn {
+    @include border-radius(.5rem);
+
+    background-color: $barely-gray;
+    border: .0625rem solid $barely-gray;
+    font-weight: bold;
+    margin: 0 .25rem;
+    width: 2rem;
+  }
+}

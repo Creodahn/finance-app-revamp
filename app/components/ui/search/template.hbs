@@ -1,0 +1,17 @@
+<div class="search-container" data-test-search-container>
+  <Ui::MaterialInput
+    @input-id="search"
+    @label="Search"
+    @required={{false}}
+    @type="text"
+
+    @update={{fn (mut this.search)}}
+  />
+  <FaIcon
+    @icon="search"
+
+    data-test-search-trigger
+
+    {{on "click" (fn @search this.search)}}
+  />
+</div>

@@ -1,0 +1,39 @@
+body {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  // overflow-y: hidden;
+  width: 100vw;
+}
+
+button,
+input {
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+button {
+  cursor: pointer;
+}
+
+h6 {
+  font-size: 3rem;
+  margin: 0;
+}
+
+html {
+  // overflow: hidden;
+}
+
+input {
+  cursor: text;
+}
+
+ol,
+ul {
+  list-style: none;
+  padding: 0;
+}

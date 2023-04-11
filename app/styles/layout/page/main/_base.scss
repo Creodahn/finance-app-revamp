@@ -1,0 +1,17 @@
+.main-page {
+  @include transition(all .5s);
+
+  bottom: 0;
+  height: auto;
+  left: 0;
+  overflow-y: auto;
+  padding: 1.5rem 1.75rem;
+  position: absolute;
+  right: 0;
+  top: 4.0625rem;
+  width: auto;
+
+  &.drawer-open {
+    left: 31.25rem;
+  }
+}

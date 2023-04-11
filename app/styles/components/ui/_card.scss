@@ -1,0 +1,46 @@
+.card {
+  @include border-radius(.5rem);
+
+  border: .0625rem solid $barely-gray;
+  // TODO: determine if we need this in some places
+  // overflow-x: hidden;
+
+  &,
+  &-header {
+    @include box-shadow(
+      0 .125rem .0625rem -.0625rem rgba(0, 0, 0, .2),
+      0 .0625rem .0625rem 0 rgba(0, 0, 0, .14),
+      0 .0625rem .1875rem 0 rgba(0, 0, 0, .12)
+    );
+  }
+
+  &-content,
+  &-header {
+    min-height: 2.5rem;
+    padding: .5rem .75rem;
+  }
+
+  &-header {
+    @include display-flex;
+    @include flex-direction(row);
+
+    align-items: center;
+    background-color: $header-color;
+    color: $white;
+    font-size: 1.75rem;
+    font-weight: 700;
+    justify-content: space-between;
+    margin: 0 -1px;
+
+    .refresh-btn {
+      @include transform(rotateZ(0deg));
+      @include transition(all 1s);
+
+      cursor: pointer;
+
+      &.loading {
+        @extend .rotating;
+      }
+    }
+  }
+}

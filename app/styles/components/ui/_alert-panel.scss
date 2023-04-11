@@ -1,0 +1,70 @@
+.alert-panel {
+  @include display-flex;
+  @include flex-direction(row);
+  @include transition(all .3s);
+
+  background-color: rgb(49, 49, 49);
+  border-top-left-radius: .25rem;
+  border-top-right-radius: .25rem;
+  bottom: -3.125rem;
+  color: $white;
+  height: 3.125rem;
+  left: 0;
+  position: absolute;
+  width: 100%;
+  z-index: 100;
+
+  &.error-state {
+    color: $bright-red
+  }
+
+  &.info-state {
+    color: $brighter-blue;
+  }
+
+  &.show {
+    bottom: 0;
+  }
+
+  &.warning-state {
+    color: $vivid-yellow;
+  }
+
+  & > .alert-level,
+  & > .btn-close,
+  & > .message {
+    color: inherit;
+  }
+
+  & > .alert-level,
+  & > .btn-close {
+    text-transform: uppercase;
+  }
+
+  & > .alert-level,
+  & > .message {
+    @include display-flex;
+    @include user-select(none);
+
+    align-items: center;
+  }
+
+  & > .alert-level {
+    font-weight: bold;
+    margin-left: .75rem;
+  }
+
+  & > .btn-close {
+    @include border-radius(.25rem);
+
+    background-color: $transparent;
+    border: .0625rem solid currentColor;
+    margin: .35rem;
+  }
+
+  & > .message {
+    @include flex(1);
+
+    word-wrap: break-word;
+  }
+}

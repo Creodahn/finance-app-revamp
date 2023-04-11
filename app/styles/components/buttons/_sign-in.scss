@@ -1,0 +1,9 @@
+.btn-sign-in {
+  @include border-radius(.25rem);
+
+  background-color: $header-color;
+  color: $white;
+  font-size: .875rem;
+  padding: .375rem 1rem;
+  text-transform: uppercase;
+}

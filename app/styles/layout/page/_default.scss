@@ -1,0 +1,23 @@
+.page {
+  &-container {
+    height: 100vh;
+    overflow: auto;
+    padding: 0;
+    position: relative;
+    width: 100vw;
+  }
+
+  &-controls {
+    align-items: center;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    padding: 10%;
+    width: 100%;
+
+    &.stick-to-bottom {
+      bottom: 0;
+      position: absolute;
+    }
+  }
+}

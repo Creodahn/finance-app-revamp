@@ -1,0 +1,25 @@
+<div class="card {{@classes}}" data-test-ui-card>
+  <header class="card-header" data-test-ui-card-header>
+    {{@title}}
+    {{#if @refreshContent}}
+      <div data-test-ui-card-loading-indicator>
+        {{#if @loading}}
+          Loading
+        {{/if}}
+        <FaIcon
+          @icon="redo"
+
+          class="refresh-btn {{if @loading "loading"}}"
+          data-test-ui-card-reload-trigger
+
+          {{on "click" @refreshContent}}
+        />
+      </div>
+    {{/if}}
+  </header>
+  <div class="card-content" data-test-ui-card-content>
+    {{yield}}
+  </div>
+  {{!-- TODO: Not using the footer yet -- needs conditional removal --}}
+  {{!-- <footer class="card-footer"></footer> --}}
+</div>

@@ -1,0 +1,29 @@
+<li class="table-row">
+  <div class="table-column">
+    {{@account.name}}
+  </div>
+  <div class="table-column">
+    <Ui::MaterialInput
+      @input-id="interest-rate-{{@account.id}}"
+      @type="number"
+      @value={{@account.interestRate}}
+      @update={{this.updateInterestRate}}
+    />
+  </div>
+  <div class="table-column">
+    <Ui::MaterialInput
+      @input-id="balance-{{@account.id}}"
+      @type="number"
+      @value={{@account.balance}}
+      @update={{this.updateBalance}}
+    />
+  </div>
+  <div class="table-column">
+    <Ui::MaterialInput
+      @input-id="pmt-input-{{@account.id}}"
+      @type="number"
+      @value={{@account.monthlyPayment}}
+      @update={{this.updateMonthlyPayment}}
+    />
+  </div>
+</li>

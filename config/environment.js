@@ -4,8 +4,8 @@ module.exports = function (environment) {
   let ENV = {
     modulePrefix: 'finance-app-revamp',
     environment,
-    rootURL: '/',
-    locationType: 'history',
+    rootURL: process.env.EMBER_CLI_ELECTRON ? '' : '/',
+    locationType: process.env.EMBER_CLI_ELECTRON ? 'hash' : 'history',
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
@@ -29,6 +29,10 @@ module.exports = function (environment) {
     // ENV.APP.LOG_TRANSITIONS = true;
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
+    ENV['ember-cli-mirage'] = {
+      enabled: true,
+      excludeFilesFromBuild: false,
+    };
   }
 
   if (environment === 'test') {

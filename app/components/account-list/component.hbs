@@ -1,0 +1,11 @@
+<ul class="data-table">
+    <li class="table-row table-header">
+      <div class="table-column">Name</div>
+      <div class="table-column">Interest Rate</div>
+      <div class="table-column">Balance</div>
+      <div class="table-column">Monthly Payment</div>
+    </li>
+    {{#each @model as |account|}}
+      <AccountList::Row @account={{account}} />
+    {{/each}}
+  </ul>

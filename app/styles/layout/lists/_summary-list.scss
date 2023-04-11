@@ -1,0 +1,51 @@
+.summary-list {
+  @include flex-direction(row);
+  
+  flex-wrap: wrap;
+
+  &,
+  dd,
+  dt {
+    @include display-flex;
+
+    align-items: flex-end;
+    margin: .5rem 0;
+    width: 100%;
+  }
+
+  dd {
+    @include flex(auto);
+
+    position: relative;
+    text-align: right;
+
+    &.unverified,
+    &.verified {
+      &::after {
+        background-repeat: no-repeat;
+        content: '';
+        height: 1rem;
+        position: absolute;
+        right: 0;
+        width: 1rem;
+      }
+    }
+
+    &.unverified {
+      &::after {
+        background-image: url('images/warning.svg');
+      }
+    }
+
+    &.verified {
+      &::after {
+        background-image: url('images/shield.svg');
+      }
+    }
+  }
+
+  dt {
+    font-weight: bolder;
+    margin-right: 5%;
+  }
+}

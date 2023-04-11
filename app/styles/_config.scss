@@ -1,0 +1,10 @@
+// for mixins, variables and helpers to aid in building
+// the application
+
+@import './config/base';
+@import './config/variables/options';
+@import './config/mixins';
+
+// this sets the base styles for all HTML elements, including a reset for
+// browser-specific styles
+@import './config/element-defaults';

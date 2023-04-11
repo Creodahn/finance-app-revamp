@@ -1,7 +1,5 @@
 {{page-title "FinanceAppRevamp"}}
-
-{{!-- The following component displays Ember's default welcome message. --}}
-<WelcomePage />
-{{!-- Feel free to remove this! --}}
-
-{{outlet}}
+<div class="flexible-page-container flex-column">
+  <AccountList @model={{this.model}} />
+  <ProjectedBalanceTable @model={{this.model}} />
+</div>

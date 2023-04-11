@@ -1,0 +1,73 @@
+<ul class="data-table row-highlights">
+  <li class="table-header">
+    <div class="table-column">
+      Account
+    </div>
+    {{#each this.months as |month|}}
+      <div class="table-column">
+        {{month}}
+      </div>
+    {{/each}}
+    <div class="table-column">
+      <b>Total</b>
+    </div>
+  </li>
+  {{#each this.accountsByMonth as |account|}}
+    <li class="table-row">
+      <div class="table-column">
+        {{account.name}}
+      </div>
+      {{#each account.monthlyBalances as |monthlyBalance|}}
+        <div class="table-column">
+          {{format-money monthlyBalance}}
+        </div>
+      {{/each}}
+      <div class="table-column">
+      </div>
+    </li>
+    <li class="table-row">
+      <div class="table-column">Payments</div>
+      {{#each account.monthlyPayments as |monthlyPayment|}}
+        <div class="table-column">{{format-money monthlyPayment}}</div>
+      {{/each}}
+      <div class="table-column">
+        <b>{{format-money account.totalPayments}}</b>
+      </div>
+    </li>
+  {{/each}}
+  <li class="table-row">
+    <div class="table-column">
+      <b>Totals</b>
+    </div>
+    {{#each this.totalsByMonth as |monthlyTotal|}}
+      <div class="table-column">
+        <b>
+          {{format-money monthlyTotal}}
+        </b>
+      </div>
+    {{/each}}
+    <div class="table-column">
+      <b>{{format-money this.overallTotal}}</b>
+    </div>
+  </li>
+  <li class="table-row">
+    <div class="table-column">Change in pmt totals</div>
+    {{#each this.totalDifferenceByMonth as |total|}}
+      <div class="table-column">{{format-money total}}</div>
+    {{/each}}
+    <div class="table-column"></div>
+  </li>
+  <li class="table-row">
+    <div class="table-column">
+      Remaining Income
+    </div>
+    {{#each this.monthlyRemainingIncome as |monthlyIncome|}}
+      <div class="table-column">
+        <b>{{format-money monthlyIncome}}</b>
+      </div>
+    {{/each}}
+    <div class="table-column">
+      <b>{{format-money this.totalRemainingIncome}}</b>
+    </div>
+  </li>
+</ul>

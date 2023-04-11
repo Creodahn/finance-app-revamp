@@ -1,0 +1,56 @@
+<div class="nav-drawer {{this.currentState}}" data-test-nav-drawer-container>
+  <ul class="nav-list" data-test-nav-drawer-list>
+    <li data-test-nav-drawer-item="home">
+      <LinkTo @route="main.dashboard">
+        <FaIcon @icon="home" />
+        Home
+      </LinkTo>
+    </li>
+    <li data-test-nav-drawer-item="users">
+      <LinkTo @route="main.users">
+        <FaIcon @icon="users" />
+        Users
+      </LinkTo>
+    </li>
+    <li data-test-nav-drawer-item="companies">
+      <LinkTo @route="main.company-management">
+        <FaIcon @icon="building" />
+        Company Management
+      </LinkTo>
+    </li>
+    <li data-test-nav-drawer-item="matches">
+      <LinkTo @route="main.match-suggestions">
+        <FaIcon @icon="comment" />
+        Match Suggestions
+      </LinkTo>
+    </li>
+    <li data-test-nav-drawer-item="access-codes">
+      <LinkTo @route="main.access-codes">
+        <FaIcon @icon="key" />
+        Access Codes
+      </LinkTo>
+    </li>
+    <li data-test-nav-drawer-item="dtc">
+      <LinkTo @route="main.dtc-numbers">
+        <FaIcon @icon="list-ol" />
+        DTC Numbers
+      </LinkTo>
+    </li>
+    <li data-test-nav-drawer-item="re-auth">
+      <LinkTo @route="main.reauth-users">
+        <FaIcon @icon="user-lock" />
+        Re-auth Users
+      </LinkTo>
+    </li>
+  </ul>
+  <footer class="nav-drawer-footer" data-test-nav-drawer-footer>
+    <ul class="nav-list" data-test-nav-drawer-footer-list>
+      <li data-test-nav-drawer-footer-list-item="sign-out">
+        <a href="" {{on "click" this.signOut}}>
+          <FaIcon @icon="sign-out-alt" />
+          Sign Out
+        </a>
+      </li>
+    </ul>
+  </footer>
+</div>

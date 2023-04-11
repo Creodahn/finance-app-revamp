@@ -1,0 +1,63 @@
+.material-input {
+  border-bottom: .0625rem solid $black;
+  height: 1.5rem;
+  margin: .75rem 0;
+  min-width: 4rem;
+  position: relative;
+  width: 100%;
+
+  & > input,
+  & > label {
+    bottom: 0;
+    font-size: 1rem;
+    height: auto;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+  }
+
+  & > input {
+    background-color: $transparent;
+    border-width: 0;
+    padding-bottom: .25rem;
+    z-index: 2;
+
+    &[type="number"] {
+      text-align: right;
+    }
+
+    &:focus,
+    &.stay-focused {
+      outline: none;
+
+      & ~ label {
+        font-size: .5rem;
+        top: -.75rem;
+      }
+    }
+
+    &[required] {
+      & ~ label {
+        position: relative;
+
+        &::after {
+          color: $berry;
+          content: '*';
+        }
+      }
+    }
+  }
+
+  & > label {
+    @include display-flex;
+    @include transition(all .3s);
+    @include user-select(none);
+
+    align-content: center;
+    color: rgba(0, 0, 0, .54);
+    padding-left: .0625rem;
+    z-index: 1;
+  }
+}

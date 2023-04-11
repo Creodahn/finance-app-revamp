@@ -1,0 +1,12 @@
+.search-container {
+  @include display-flex;
+  @include flex-direction(row);
+
+  align-items: center;
+  width: 25%;
+
+  .fa-search {
+    cursor: pointer;
+    margin-left: 1rem;
+  }
+}

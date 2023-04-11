@@ -1,0 +1,26 @@
+.flexible-page {
+  &-container {
+    @include display-flex;
+    @extend .page-container;
+
+    align-items: center;
+  }
+
+  &-modal {
+    @include display-flex;
+    @include flex-direction(column);
+
+    align-self: center;
+    justify-self: center;
+
+    &-content {
+      @include display-flex;
+      @include flex-direction(column);
+    }
+
+    &-header {
+      text-align: center;
+      width: 100%;
+    }
+  }
+}

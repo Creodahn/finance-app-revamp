@@ -1,0 +1,58 @@
+.nav-drawer-trigger {
+      
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  height: 3rem;
+  margin: 0 .75rem;
+  width: 3rem;
+
+  &.open {
+    & > span {
+      background: transparent;
+
+      &::after {
+        @include transform(rotate(-135deg));
+        top: 0;
+      }
+
+      &::before {
+        @include transform(rotate(135deg));
+        top: 0;
+      }
+    }
+  }
+
+  & > span {
+    position: relative;
+
+    &,
+    &::before,
+    &::after {
+      @include display-flex;
+
+      background-color: $white;
+      height: .125rem;
+      width: 2rem;
+    }
+
+    &::before,
+    &::after {
+      @include transition(all .2s);
+
+      content: '';
+      left: 0;
+      position: absolute;
+    }
+
+    &::before {
+      top: -.6rem;
+    }
+
+    &::after {
+      // offset by half of height
+      top: .6625rem;
+    }
+  }
+
+}

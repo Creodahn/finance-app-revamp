@@ -1,0 +1,36 @@
+.login {
+  background-color: rgba(250, 250, 250, 1);
+  height: 100vh;
+  width: 100vw;
+
+  & > .flexible-page-modal {
+    @include border-radius(.25rem);
+    box-shadow: 0 .0625rem .3125rem 0 rgba(0, 0, 0, .2),
+      0 .125rem .125rem 0 rgba(0, 0, 0, .14),
+      0 .1875rem .0625rem -.125rem rgba(0, 0, 0, .12);
+
+    max-width: 50rem;
+    padding: 1rem .75rem;
+    width: 40vw;
+
+    .flexible-page-modal-header {
+      @include display-flex;
+      @include flex-direction(column);
+
+      align-items: center;
+      color: rgba(0, 0, 0, 0.87);
+      font-size: 1.5rem;
+      font-weight: 400;
+      justify-content: center;
+      line-height: 1.33;
+      letter-spacing: 0;
+      margin-bottom: .5rem;
+
+      & > .md-icon {
+        @include display-flex;
+
+        margin: .75rem 0 1.25rem;
+      }
+    }
+  }
+}

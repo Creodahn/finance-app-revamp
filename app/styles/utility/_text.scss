@@ -1,0 +1,58 @@
+// use SCSS loops to declare classes for controlling text color and size
+$font-colors: (dark,
+                (
+                  (green, $dark-green),
+                  (red, $strong-red),
+                  (yellow, $dark-vivid-yellow)
+                )
+              ),
+              (light,
+                (
+                  (green, $light-green),
+                  (red, $bright-red),
+                  (yellow, $light-yellow)
+                )
+              ),
+              ('',
+                (
+                  (green, $lime-green),
+                  (red, $red),
+                  (yellow, $vivid-yellow),
+                  (white, $white)
+                )
+              );
+$font-justifications: left, center, justify, right;
+$font-sizes: (large, 1.75rem), (small, .875rem), (x-large, 3.125rem);
+$font-weights: (normal, bold, bolder, lighter);
+
+@each $size-txt, $size in $font-sizes {
+  .font-#{$size-txt} {
+    font-size: $size !important;
+  }
+}
+
+@each $alignment in $font-justifications {
+  .text-#{$alignment}-align {
+    text-align: $alignment;
+  }
+}
+
+@each $weight-text in $font-weights {
+  .text-#{$weight-text} {
+    font-weight: $weight-text;
+  }
+}
+
+@each $shade, $color-group in $font-colors {
+  @each $color-txt, $color in $color-group {
+    @if($shade == '') {
+      .text-#{"" + $color-txt} {
+        color: $color !important;
+      }
+    } @else {
+      .text-#{$shade}-#{"" + $color-txt} {
+        color: $color !important;
+      }
+    }
+  }
+}

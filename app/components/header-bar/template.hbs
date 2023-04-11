@@ -1,0 +1,10 @@
+<header class="header-bar" data-test-header-bar>
+  {{#if this.currentUser.authedUserHasAccess}}
+    <div class="branding" data-test-header-branding>
+      <NavDrawerTrigger />
+      <h6 data-test-header-title>
+        Grifin Admin Dashboard
+      </h6>
+    </div>
+  {{/if}}
+</header>

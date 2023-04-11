@@ -1,0 +1,13 @@
+<div class="alert-panel {{this.level}} {{if this.message "show"}}" data-test-alert-panel>
+  <div class="alert-level" data-test-alert-level>
+    {{this.levelText}}
+  </div>
+  <div class="message" data-test-alert-message>
+    {{this.message}}
+  </div>
+  {{#if this.message}}
+    <button class="btn-close" type="button" {{on "click" this.clear}} data-test-alert-close-btn>
+      Close
+    </button>
+  {{/if}}
+</div>

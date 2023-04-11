@@ -1,0 +1,22 @@
+.dashboard {
+  &-card {
+    width: 33%;
+  }
+
+  &-data-list {
+    @include display-inline-flex;
+    @include flex-direction(column);
+    @extend .flex-center-content;
+
+    dd,
+    dt {
+      margin: 0;
+    }
+
+    dd {
+      color: $header-color;
+      font-size: 1.5rem;
+      font-weight: bolder;
+    }
+  }
+}
