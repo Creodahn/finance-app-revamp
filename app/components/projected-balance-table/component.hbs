@@ -37,7 +37,24 @@
   {{/each}}
   <li class="table-row">
     <div class="table-column">
-      <b>Totals</b>
+      <b>Total credit pmts</b>
+    </div>
+    {{#each this.totalCreditPaymentsByMonth as |pmt|}}
+      <div class="table-column">
+        <b>
+          {{format-money pmt}}
+        </b>
+      </div>
+    {{/each}}
+    <div class="table-column">
+      <b>
+        {{format-money this.overallCreditTotal}}
+      </b>
+    </div>
+  </li>
+  <li class="table-row">
+    <div class="table-column">
+      <b>Total Pmts</b>
     </div>
     {{#each this.totalsByMonth as |monthlyTotal|}}
       <div class="table-column">
@@ -69,5 +86,27 @@
     <div class="table-column">
       <b>{{format-money this.totalRemainingIncome}}</b>
     </div>
+  </li>
+  <li class="table-row">
+    <div class="table-column">
+      Remaining credit debt
+    </div>
+    {{#each this.totalCreditDebtByMonth as |debt|}}
+      <div class="table-column">
+        <b>{{format-money debt}}</b>
+      </div>
+    {{/each}}
+    <div class="table-column"></div>
+  </li>
+  <li class="table-row">
+    <div class="table-column">
+      Remaining total debt
+    </div>
+    {{#each this.totalDebtByMonth as |debt|}}
+      <div class="table-column">
+        <b>{{format-money debt}}</b>
+      </div>
+    {{/each}}
+    <div class="table-column"></div>
   </li>
 </ul>
