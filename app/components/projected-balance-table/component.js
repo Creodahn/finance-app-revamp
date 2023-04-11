@@ -53,12 +53,32 @@ export default class ProjectedBalanceTableComponent extends Component {
     });
   }
 
+  get creditAccountsByMonth() {
+    return this.accountsByMonth.filterBy('isCredit');
+  }
+
   get overallTotal() {
-    return this.totalsByMonth.reduce((total, current) => total + current);
+    return this.sumArray(this.totalsByMonth);
+  }
+
+  get overallCreditTotal() {
+    return this.sumArray(this.totalCreditPaymentsByMonth);
+  }
+
+  get totalCreditPaymentsByMonth() {
+    let totals = this.initializeTotalArray();
+
+    this.creditAccountsByMonth.forEach((account) => {
+      account.monthlyPayments.forEach((payment, index) => {
+        totals[index] += payment;
+      });
+    });
+
+    return totals;
   }
 
   get totalsByMonth() {
-    let totals = Array.apply(null, Array(this.numberOfMonths)).map(() => 0);
+    let totals = this.initializeTotalArray();
 
     this.accountsByMonth.forEach((account) => {
       account.monthlyPayments.forEach((payment, index) => {
@@ -89,16 +109,40 @@ export default class ProjectedBalanceTableComponent extends Component {
     return this.totalsByMonth.map((total) => MONTHLY_INCOME - total);
   }
 
+  get totalCreditDebtByMonth() {
+    let totalDebtByMonth = this.initializeTotalArray();
+
+    this.creditAccountsByMonth.forEach((account) => {
+      console.log(account)
+      account.monthlyBalances.forEach((balance, index) => {
+        totalDebtByMonth[index] += balance;
+      });
+    });
+
+    return totalDebtByMonth;
+  }
+
+  get totalDebtByMonth() {
+    let totalDebtByMonth = this.initializeTotalArray();
+
+    this.accountsByMonth.forEach((account) => {
+      account.monthlyBalances.forEach((balance, index) => {
+        totalDebtByMonth[index] += balance;
+      });
+    });
+
+    return totalDebtByMonth;
+  }
+
   get totalRemainingIncome() {
-    return this.monthlyRemainingIncome.reduce(
-      (total, current) => total + current
-    );
+    return this.sumArray(this.monthlyRemainingIncome);
   }
 
   calculateBalance({ balance, interestRate, monthlyPayment = 0 }, payments) {
     let pmtsSoFar = payments.length;
     let beginningBalance =
-      (pmtsSoFar > 0 ? payments[pmtsSoFar - 1] : balance) - parseFloat(monthlyPayment);
+      (pmtsSoFar > 0 ? payments[pmtsSoFar - 1] : balance) -
+      parseFloat(monthlyPayment);
     let interest = this.calculateInterestAmount(beginningBalance, interestRate);
     let newBalance = beginningBalance + interest;
 
@@ -128,6 +172,7 @@ export default class ProjectedBalanceTableComponent extends Component {
 
     return {
       name: account.name,
+      isCredit: account.credit,
       monthlyBalances,
       monthlyPayments,
       totalPayments: monthlyPayments.reduce((total, current) => {
@@ -141,5 +186,13 @@ export default class ProjectedBalanceTableComponent extends Component {
       let diff = balance - monthlyPayment;
       return diff < 0 ? balance : parseFloat(monthlyPayment);
     });
+  }
+
+  initializeTotalArray() {
+    return Array.apply(null, Array(this.numberOfMonths)).map(() => 0);
+  }
+
+  sumArray(array) {
+    return array.reduce((total, current) => total + current);
   }
 }
