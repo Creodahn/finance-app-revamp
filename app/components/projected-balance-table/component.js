@@ -113,7 +113,6 @@ export default class ProjectedBalanceTableComponent extends Component {
     let totalDebtByMonth = this.initializeTotalArray();
 
     this.creditAccountsByMonth.forEach((account) => {
-      console.log(account)
       account.monthlyBalances.forEach((balance, index) => {
         totalDebtByMonth[index] += balance;
       });
