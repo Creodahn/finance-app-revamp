@@ -72,5 +72,6 @@
     "edition": "octane"
   },
   "dependencies": {
+    "ember-test-selectors": "^6.0.0"
   }
 }
