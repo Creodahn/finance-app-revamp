@@ -1,5 +1,6 @@
 {{page-title "FinanceAppRevamp"}}
 <div class="flexible-page-container flex-column">
-  <AccountList @model={{this.model}} />
+  <AccountList @accountAttributes={{this.accountAttributes}} @model={{this.model}} />
   <ProjectedBalanceTable @model={{this.model}} />
 </div>
+<AlertPanel />
