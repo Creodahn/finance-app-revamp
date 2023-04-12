@@ -4,7 +4,9 @@ import { inject as service } from '@ember/service';
 export default class ApplicationRoute extends Route {
   @service store;
 
-  model() {
-    return this.store.findAll('account');
+  async model() {
+    let accounts = await this.store.findAll('account');
+
+    return [...accounts.toArray(), this.store.createRecord('account')];
   }
 }

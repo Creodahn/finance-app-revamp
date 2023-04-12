@@ -8,8 +8,9 @@
   border-top-right-radius: .25rem;
   bottom: -3.125rem;
   color: $white;
-  height: 3.125rem;
   left: 0;
+  min-height: 3.125rem;
+  padding: .5rem .5rem 0 .5rem;
   position: absolute;
   width: 100%;
   z-index: 100;
@@ -45,13 +46,10 @@
   & > .message {
     @include display-flex;
     @include user-select(none);
-
-    align-items: center;
   }
 
   & > .alert-level {
     font-weight: bold;
-    margin-left: .75rem;
   }
 
   & > .btn-close {
@@ -65,6 +63,7 @@
   & > .message {
     @include flex(1);
 
+    white-space: pre;
     word-wrap: break-word;
   }
 }
