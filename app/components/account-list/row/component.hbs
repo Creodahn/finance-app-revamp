@@ -2,13 +2,19 @@
   {{#each @attributes as |attr|}}
     <div class="table-column">
       <Ui::MaterialInput
-        @input-id="{{attr}}-{{@account.id}}"
-        @value={{mut (get @account attr)}}
-        @update={{fn this.update attr}}
+        @input-id="{{attr.name}}-{{@account.id}}"
+        @type={{attr.type}}
+        @value={{mut (get @account attr.name)}}
+        @update={{fn this.update attr.name}}
       />
     </div>
   {{/each}}
+  <section class="invisible-table-column">
+    {{#if this.account.edited}}
+      <button type="button" {{on "click" this.save}}>Save</button>
+    {{/if}}
+    {{#if this.account.persisted}}
+      <button type="button" {{on "click" this.delete}}>Delete</button>
+    {{/if}}
+  </section>
 </li>
-{{#if this.accountEdited}}
-  <button type="button" {{on "click" this.save}}>Save</button>
-{{/if}}

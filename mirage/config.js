@@ -6,8 +6,9 @@ export default function (config) {
     ...config,
     models: { ...discoverEmberDataModels(), ...config.models },
     routes() {
-      this.get('accounts');
-      this.post('accounts');
+      this.delete('/accounts/:id');
+      this.get('/accounts');
+      this.post('/accounts');
     },
   };
 

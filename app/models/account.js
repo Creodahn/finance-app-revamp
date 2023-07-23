@@ -1,3 +1,4 @@
+import { isEmpty } from '@ember/utils';
 import Model, { attr } from '@ember-data/model';
 import { modelValidator } from 'ember-model-validator';
 
@@ -8,6 +9,18 @@ class AccountModel extends Model {
   @attr('number') interestRate;
   @attr('number') monthlyPayment;
   @attr('string') name;
+
+  get canBePersisted() {
+    return this.edited && isEmpty(this.errors);
+  }
+
+  get edited() {
+    return Object.keys(this.changedAttributes()).length > 0;
+  }
+
+  get persisted() {
+    return !!this.id;
+  }
 
   validations = {
     name: {

@@ -1,5 +1,6 @@
 import { action } from '@ember/object';
 import { dasherize } from '@ember/string';
+import { isEmpty } from '@ember/utils';
 import { inject as service } from '@ember/service';
 import Component from '@glimmer/component';
 
@@ -11,12 +12,29 @@ export default class AccountListRowComponent extends Component {
     return this.args.account || this.store.createRecord('account');
   }
 
+  get accountCanBePersisted() {
+    return this.accountEdited && isEmpty(this.account.get('errors'));
+  }
+
   get accountEdited() {
-    return this.account.hasDirtyAttributes;
+    return (
+      (!this.account.isNew || this.accountPersisted) &&
+      this.account.hasDirtyAttributes
+    );
+  }
+
+  get accountPersisted() {
+    return this.identifier !== 0;
   }
 
   get identifier() {
     return this.account?.id || 0;
+  }
+
+  @action
+  async delete() {
+    await this.account.destroyRecord();
+    this.store.unloadRecord(this.account);
   }
 
   @action
@@ -44,5 +62,6 @@ export default class AccountListRowComponent extends Component {
   @action
   update(attr, value) {
     this.account[attr] = value;
+    this.account.validate();
   }
 }

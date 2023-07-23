@@ -1,11 +1,13 @@
 <ul class="data-table" data-test-account-list>
     <li class="table-row table-header">
       {{#each @accountAttributes as |attr|}}
-        <div class="table-column">{{format-title attr}}</div>
+        <div class="table-column">{{format-title attr.name}}</div>
       {{/each}}
+      {{#if this.anyEditedOrPersisted}}
+        <section class="invisible-table-column"></section>
+      {{/if}}
     </li>
     {{#each @model as |account|}}
       <AccountList::Row @account={{account}} @attributes={{@accountAttributes}} />
     {{/each}}
   </ul>
-  

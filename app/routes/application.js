@@ -6,7 +6,10 @@ export default class ApplicationRoute extends Route {
 
   async model() {
     let accounts = await this.store.findAll('account');
+    let newAccount = this.store.createRecord('account');
 
-    return [...accounts.toArray(), this.store.createRecord('account')];
+    newAccount.validate();
+
+    return [...accounts.toArray(), newAccount];
   }
 }
