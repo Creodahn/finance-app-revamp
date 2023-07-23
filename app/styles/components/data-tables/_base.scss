@@ -28,14 +28,19 @@
 
     padding: .5rem 0;
 
+    & > .invisible-table-column,
     & > .table-column {
       @include display-flex;
       @include flex(1);
 
       align-items: center;
-      border-right: .0625rem solid $barely-gray;
       justify-content: center;
+      min-width: 6.25rem;
       text-align: center;
+    }
+
+    & > .table-column {
+      border-right: .0625rem solid $barely-gray;
 
       &:last-of-type {
         border: 0;

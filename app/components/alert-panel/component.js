@@ -3,7 +3,7 @@ import { cancel, later } from '@ember/runloop';
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-import ENV from 'grifin-admin/config/environment';
+import ENV from 'finance-app-revamp/config/environment';
 
 export default class AlertPanelComponent extends Component {
   displayTimer = null;

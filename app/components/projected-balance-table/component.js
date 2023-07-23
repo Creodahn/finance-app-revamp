@@ -48,7 +48,7 @@ export default class ProjectedBalanceTableComponent extends Component {
   get accountsByMonth() {
     let { accounts } = this;
 
-    return accounts?.map((account) => {
+    return accounts?.filterBy('name').map((account) => {
       return this.calculateMonthlyData(account);
     });
   }
