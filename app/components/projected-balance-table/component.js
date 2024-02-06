@@ -1,25 +1,30 @@
 import Component from '@glimmer/component';
+import { MONTH_NAMES } from 'finance-app-revamp/utils/months';
+import {
+  initializeArray,
+  sumArray,
+} from 'finance-app-revamp/utils/array-manipulation';
 import { tracked } from '@glimmer/tracking';
 
 const NUMBER_OF_MONTHS = 12;
 const MONTHLY_INCOME = 9300;
 
 export default class ProjectedBalanceTableComponent extends Component {
-  monthNames = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-  ];
+  monthNames = MONTH_NAMES;
+
   @tracked numberOfMonths = NUMBER_OF_MONTHS;
+
+  #calculateAccountTotalsByField(accounts, field) {
+    let totals = initializeArray(this.numberOfMonths);
+
+    accounts?.forEach((account) => {
+      account.[field]?.forEach((amount, index) => {
+        totals[index] += amount;
+      });
+    });
+
+    return totals;
+  }
 
   get accounts() {
     return this.args.model;
@@ -58,35 +63,19 @@ export default class ProjectedBalanceTableComponent extends Component {
   }
 
   get overallTotal() {
-    return this.sumArray(this.totalsByMonth);
+    return sumArray(this.totalsByMonth);
   }
 
   get overallCreditTotal() {
-    return this.sumArray(this.totalCreditPaymentsByMonth);
+    return sumArray(this.totalCreditPaymentsByMonth);
   }
 
   get totalCreditPaymentsByMonth() {
-    let totals = this.initializeTotalArray();
-
-    this.creditAccountsByMonth?.forEach((account) => {
-      account.monthlyPayments?.forEach((payment, index) => {
-        totals[index] += payment;
-      });
-    });
-
-    return totals;
+    return this.#calculateAccountTotalsByField(this.creditAccountsByMonth, 'monthlyPayments');
   }
 
   get totalsByMonth() {
-    let totals = this.initializeTotalArray();
-
-    this.accountsByMonth?.forEach((account) => {
-      account.monthlyPayments?.forEach((payment, index) => {
-        totals[index] += payment;
-      });
-    });
-
-    return totals;
+    return this.#calculateAccountTotalsByField(this.accountsByMonth, 'monthlyPayments');
   }
 
   get totalDifferenceByMonth() {
@@ -110,19 +99,11 @@ export default class ProjectedBalanceTableComponent extends Component {
   }
 
   get totalCreditDebtByMonth() {
-    let totalDebtByMonth = this.initializeTotalArray();
-
-    this.creditAccountsByMonth?.forEach((account) => {
-      account.monthlyBalances?.forEach((balance, index) => {
-        totalDebtByMonth[index] += balance;
-      });
-    });
-
-    return totalDebtByMonth;
+    return this.#calculateAccountTotalsByField(this.creditAccountsByMonth, 'monthlyBalances');
   }
 
   get totalDebtByMonth() {
-    let totalDebtByMonth = this.initializeTotalArray();
+    let totalDebtByMonth = initializeArray(this.numberOfMonths);
 
     this.accountsByMonth?.forEach((account) => {
       account.monthlyBalances?.forEach((balance, index) => {
@@ -134,7 +115,7 @@ export default class ProjectedBalanceTableComponent extends Component {
   }
 
   get totalRemainingIncome() {
-    return this.sumArray(this.monthlyRemainingIncome);
+    return sumArray(this.monthlyRemainingIncome);
   }
 
   calculateBalance({ balance, interestRate, monthlyPayment = 0 }, payments) {
@@ -185,13 +166,5 @@ export default class ProjectedBalanceTableComponent extends Component {
       let diff = balance - monthlyPayment;
       return diff < 0 ? balance : parseFloat(monthlyPayment);
     });
-  }
-
-  initializeTotalArray() {
-    return Array.apply(null, Array(this.numberOfMonths)).map(() => 0);
-  }
-
-  sumArray(array = []) {
-    return array.reduce((total, current) => total + current);
   }
 }
