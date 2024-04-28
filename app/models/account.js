@@ -36,7 +36,7 @@ class AccountModel extends Model {
   }
 
   get persisted() {
-    return !!this.id;
+    return !!this.id && !this.edited;
   }
 }
 

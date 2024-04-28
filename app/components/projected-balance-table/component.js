@@ -9,6 +9,10 @@ import { tracked } from '@glimmer/tracking';
 const NUMBER_OF_MONTHS = 12;
 const MONTHLY_INCOME = 9300;
 
+function formatAmt(amt) {
+  return parseFloat(amt || '0');
+}
+
 export default class ProjectedBalanceTableComponent extends Component {
   monthNames = MONTH_NAMES;
 
@@ -112,18 +116,18 @@ export default class ProjectedBalanceTableComponent extends Component {
 
     accounts?.forEach((account) => {
       account[field]?.forEach((amount, index) => {
-        totals[index] += amount;
+        totals[index] += amount || 0;
       });
     });
 
     return totals;
   }
 
-  #calculateBalance({ balance, interestRate, monthlyPayment = 0 }, payments) {
+  #calculateBalance({ balance, interestRate, monthlyPayment }, payments) {
     let pmtsSoFar = payments.length;
     let beginningBalance =
       (pmtsSoFar > 0 ? payments[pmtsSoFar - 1] : balance) -
-      parseFloat(monthlyPayment);
+      formatAmt(monthlyPayment);
     let interest = this.#calculateInterestAmount(
       beginningBalance,
       interestRate
@@ -160,15 +164,16 @@ export default class ProjectedBalanceTableComponent extends Component {
       monthlyBalances,
       monthlyPayments,
       totalPayments: monthlyPayments.reduce((total, current) => {
-        return parseFloat(total) + parseFloat(current);
+        return formatAmt(total) + formatAmt(current);
       }),
     };
   }
 
   #calculateMonthlyPayments({ monthlyPayment }, monthlyBalances = []) {
     return monthlyBalances.map((balance) => {
-      let diff = balance - monthlyPayment;
-      return diff < 0 ? balance : parseFloat(monthlyPayment);
+      let pmt = formatAmt(monthlyPayment);
+      let diff = balance - pmt;
+      return diff < 0 ? balance : pmt;
     });
   }
 }
