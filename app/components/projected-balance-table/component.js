@@ -1,24 +1,21 @@
 import Component from '@glimmer/component';
+import { MONTH_NAMES } from 'finance-app-revamp/utils/months';
+import {
+  initializeArray,
+  sumArray,
+} from 'finance-app-revamp/utils/array-manipulation';
 import { tracked } from '@glimmer/tracking';
 
 const NUMBER_OF_MONTHS = 12;
 const MONTHLY_INCOME = 9300;
 
+function formatAmt(amt) {
+  return parseFloat(amt || '0');
+}
+
 export default class ProjectedBalanceTableComponent extends Component {
-  monthNames = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-  ];
+  monthNames = MONTH_NAMES;
+
   @tracked numberOfMonths = NUMBER_OF_MONTHS;
 
   get accounts() {
@@ -48,8 +45,8 @@ export default class ProjectedBalanceTableComponent extends Component {
   get accountsByMonth() {
     let { accounts } = this;
 
-    return accounts?.map((account) => {
-      return this.calculateMonthlyData(account);
+    return accounts?.filterBy('name').map((account) => {
+      return this.#calculateMonthlyData(account);
     });
   }
 
@@ -58,35 +55,25 @@ export default class ProjectedBalanceTableComponent extends Component {
   }
 
   get overallTotal() {
-    return this.sumArray(this.totalsByMonth);
+    return sumArray(this.totalsByMonth);
   }
 
   get overallCreditTotal() {
-    return this.sumArray(this.totalCreditPaymentsByMonth);
+    return sumArray(this.totalCreditPaymentsByMonth);
   }
 
   get totalCreditPaymentsByMonth() {
-    let totals = this.initializeTotalArray();
-
-    this.creditAccountsByMonth?.forEach((account) => {
-      account.monthlyPayments?.forEach((payment, index) => {
-        totals[index] += payment;
-      });
-    });
-
-    return totals;
+    return this.#calculateAccountTotalsByField(
+      this.creditAccountsByMonth,
+      'monthlyPayments'
+    );
   }
 
   get totalsByMonth() {
-    let totals = this.initializeTotalArray();
-
-    this.accountsByMonth?.forEach((account) => {
-      account.monthlyPayments?.forEach((payment, index) => {
-        totals[index] += payment;
-      });
-    });
-
-    return totals;
+    return this.#calculateAccountTotalsByField(
+      this.accountsByMonth,
+      'monthlyPayments'
+    );
   }
 
   get totalDifferenceByMonth() {
@@ -110,61 +97,63 @@ export default class ProjectedBalanceTableComponent extends Component {
   }
 
   get totalCreditDebtByMonth() {
-    let totalDebtByMonth = this.initializeTotalArray();
-
-    this.creditAccountsByMonth?.forEach((account) => {
-      account.monthlyBalances?.forEach((balance, index) => {
-        totalDebtByMonth[index] += balance;
-      });
-    });
-
-    return totalDebtByMonth;
+    return this.#calculateAccountTotalsByField(
+      this.creditAccountsByMonth,
+      'monthlyBalances'
+    );
   }
 
   get totalDebtByMonth() {
-    let totalDebtByMonth = this.initializeTotalArray();
-
-    this.accountsByMonth?.forEach((account) => {
-      account.monthlyBalances?.forEach((balance, index) => {
-        totalDebtByMonth[index] += balance;
-      });
-    });
-
-    return totalDebtByMonth;
+    return this.#calculateAccountTotalsByField(this.accountsByMonth, 'balance');
   }
 
   get totalRemainingIncome() {
-    return this.sumArray(this.monthlyRemainingIncome);
+    return sumArray(this.monthlyRemainingIncome);
   }
 
-  calculateBalance({ balance, interestRate, monthlyPayment = 0 }, payments) {
+  #calculateAccountTotalsByField(accounts, field) {
+    let totals = initializeArray(this.numberOfMonths);
+
+    accounts?.forEach((account) => {
+      account[field]?.forEach((amount, index) => {
+        totals[index] += amount || 0;
+      });
+    });
+
+    return totals;
+  }
+
+  #calculateBalance({ balance, interestRate, monthlyPayment }, payments) {
     let pmtsSoFar = payments.length;
     let beginningBalance =
       (pmtsSoFar > 0 ? payments[pmtsSoFar - 1] : balance) -
-      parseFloat(monthlyPayment);
-    let interest = this.calculateInterestAmount(beginningBalance, interestRate);
+      formatAmt(monthlyPayment);
+    let interest = this.#calculateInterestAmount(
+      beginningBalance,
+      interestRate
+    );
     let newBalance = beginningBalance + interest;
 
     return newBalance < 0 ? 0 : newBalance;
   }
 
-  calculateInterestAmount(balance, rate) {
-    return (balance * (rate / 100)) / this.numberOfMonths;
-  }
-
-  calculateBalancePerMonth(account) {
+  #calculateBalancePerMonth(account) {
     let paymentsArray = [account.balance];
 
     for (let i = this.numberOfMonths - 1; i > 0; i--) {
-      paymentsArray.push(this.calculateBalance(account, paymentsArray));
+      paymentsArray.push(this.#calculateBalance(account, paymentsArray));
     }
 
     return paymentsArray;
   }
 
-  calculateMonthlyData(account) {
-    let monthlyBalances = this.calculateBalancePerMonth(account);
-    let monthlyPayments = this.calculateMonthlyPayments(
+  #calculateInterestAmount(balance, rate) {
+    return (balance * (rate / 100)) / this.numberOfMonths;
+  }
+
+  #calculateMonthlyData(account) {
+    let monthlyBalances = this.#calculateBalancePerMonth(account);
+    let monthlyPayments = this.#calculateMonthlyPayments(
       account,
       monthlyBalances
     );
@@ -175,23 +164,16 @@ export default class ProjectedBalanceTableComponent extends Component {
       monthlyBalances,
       monthlyPayments,
       totalPayments: monthlyPayments.reduce((total, current) => {
-        return parseFloat(total) + parseFloat(current);
+        return formatAmt(total) + formatAmt(current);
       }),
     };
   }
 
-  calculateMonthlyPayments({ monthlyPayment }, monthlyBalances = []) {
+  #calculateMonthlyPayments({ monthlyPayment }, monthlyBalances = []) {
     return monthlyBalances.map((balance) => {
-      let diff = balance - monthlyPayment;
-      return diff < 0 ? balance : parseFloat(monthlyPayment);
+      let pmt = formatAmt(monthlyPayment);
+      let diff = balance - pmt;
+      return diff < 0 ? balance : pmt;
     });
-  }
-
-  initializeTotalArray() {
-    return Array.apply(null, Array(this.numberOfMonths)).map(() => 0);
-  }
-
-  sumArray(array = []) {
-    return array.reduce((total, current) => total + current);
   }
 }

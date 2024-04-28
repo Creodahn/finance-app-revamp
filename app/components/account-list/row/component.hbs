@@ -1,29 +1,20 @@
 <li class="table-row" data-test-account-list-row={{this.identifier}}>
-  <div class="table-column">
-    {{@account.name}}
-  </div>
-  <div class="table-column">
-    <Ui::MaterialInput
-      @input-id="interest-rate-{{@account.id}}"
-      @type="number"
-      @value={{@account.interestRate}}
-      @update={{this.updateInterestRate}}
-    />
-  </div>
-  <div class="table-column">
-    <Ui::MaterialInput
-      @input-id="balance-{{@account.id}}"
-      @type="number"
-      @value={{@account.balance}}
-      @update={{this.updateBalance}}
-    />
-  </div>
-  <div class="table-column">
-    <Ui::MaterialInput
-      @input-id="pmt-input-{{@account.id}}"
-      @type="number"
-      @value={{@account.monthlyPayment}}
-      @update={{this.updateMonthlyPayment}}
-    />
-  </div>
+  {{#each @attributes as |attr|}}
+    <div class="table-column">
+      <Ui::MaterialInput
+        @input-id="{{attr.name}}-{{@account.id}}"
+        @type={{attr.type}}
+        @value={{mut (get @account attr.name)}}
+        @update={{fn this.update attr.name}}
+      />
+    </div>
+  {{/each}}
+  <section class="invisible-table-column">
+    {{#if this.account.edited}}
+      <button type="button" {{on "click" this.save}}>Save</button>
+    {{/if}}
+    {{#if this.account.persisted}}
+      <button type="button" {{on "click" this.delete}}>Delete</button>
+    {{/if}}
+  </section>
 </li>

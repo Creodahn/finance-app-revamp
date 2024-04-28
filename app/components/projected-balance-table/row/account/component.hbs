@@ -1,0 +1,21 @@
+<li class="table-row">
+  <div class="table-column">
+    {{@account.name}}
+  </div>
+  {{#each @account.monthlyBalances as |monthlyBalance|}}
+    <div class="table-column">
+      {{format-money monthlyBalance}}
+    </div>
+  {{/each}}
+  <div class="table-column">
+  </div>
+</li>
+<li class="table-row">
+  <div class="table-column"></div>
+  {{#each @account.monthlyPayments as |monthlyPayment|}}
+    <div class="table-column">{{format-money monthlyPayment}}</div>
+  {{/each}}
+  <div class="table-column">
+    <b>{{format-money @account.totalPayments}}</b>
+  </div>
+</li>
