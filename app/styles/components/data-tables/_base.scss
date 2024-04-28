@@ -11,6 +11,11 @@
 
   border: .125rem solid $barely-gray;
   padding: 1rem;
+  overflow: auto;
+
+  &.projected-balance {
+    width: 98vw;
+  }
 
   &.row-highlights {
     .table-row {
@@ -27,6 +32,7 @@
     @include flex-direction(row);
 
     padding: .5rem 0;
+    width: fit-content;
 
     & > .invisible-table-column,
     & > .table-column {

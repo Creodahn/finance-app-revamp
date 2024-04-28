@@ -2,8 +2,25 @@ import { isEmpty } from '@ember/utils';
 import Model, { attr } from '@ember-data/model';
 import { modelValidator } from 'ember-model-validator';
 
+const VALIDATIONS = {
+  name: {
+    presence: true,
+  },
+  interestRate: {
+    presence: true,
+  },
+  monthlyPayment: {
+    presence: true,
+  },
+  balance: {
+    presence: true,
+  },
+};
+
 @modelValidator
 class AccountModel extends Model {
+  validations = VALIDATIONS;
+
   @attr('number') balance;
   @attr('boolean') credit;
   @attr('number') interestRate;
@@ -21,21 +38,6 @@ class AccountModel extends Model {
   get persisted() {
     return !!this.id;
   }
-
-  validations = {
-    name: {
-      presence: true,
-    },
-    interestRate: {
-      presence: true,
-    },
-    monthlyPayment: {
-      presence: true,
-    },
-    balance: {
-      presence: true,
-    },
-  };
 }
 
 export default AccountModel;

@@ -1,112 +1,27 @@
-<ul class="data-table row-highlights" data-test-projected-balance-table>
-  <li class="table-header">
-    <div class="table-column">
-      Account
-    </div>
-    {{#each this.months as |month|}}
-      <div class="table-column">
-        {{month}}
-      </div>
-    {{/each}}
-    <div class="table-column">
-      <b>Total</b>
-    </div>
-  </li>
+<ul class="data-table projected-balance row-highlights" data-test-projected-balance-table>
+  <ProjectedBalanceTable::Header
+    @month={{this.months}}
+  />
   {{#each this.accountsByMonth as |account|}}
-    <li class="table-row">
-      <div class="table-column">
-        {{account.name}}
-      </div>
-      {{#each account.monthlyBalances as |monthlyBalance|}}
-        <div class="table-column">
-          {{format-money monthlyBalance}}
-        </div>
-      {{/each}}
-      <div class="table-column">
-      </div>
-    </li>
-    <li class="table-row">
-      <div class="table-column">Payments</div>
-      {{#each account.monthlyPayments as |monthlyPayment|}}
-        <div class="table-column">{{format-money monthlyPayment}}</div>
-      {{/each}}
-      <div class="table-column">
-        <b>{{format-money account.totalPayments}}</b>
-      </div>
-    </li>
+    <ProjectedBalanceTable::Row::Account @account={{account}} />
   {{/each}}
-  <li class="table-row">
-    <div class="table-column">
-      <b>Total credit pmts</b>
-    </div>
-    {{#each this.totalCreditPaymentsByMonth as |pmt|}}
-      <div class="table-column">
-        <b>
-          {{format-money pmt}}
-        </b>
-      </div>
-    {{/each}}
-    <div class="table-column">
-      <b>
-        {{format-money this.overallCreditTotal}}
-      </b>
-    </div>
-  </li>
-  <li class="table-row">
-    <div class="table-column">
-      <b>Total Pmts</b>
-    </div>
-    {{#each this.totalsByMonth as |monthlyTotal|}}
-      <div class="table-column">
-        <b>
-          {{format-money monthlyTotal}}
-        </b>
-      </div>
-    {{/each}}
-    <div class="table-column">
-      <b>{{format-money this.overallTotal}}</b>
-    </div>
-  </li>
-  <li class="table-row">
-    <div class="table-column">Change in pmt totals</div>
-    {{#each this.totalDifferenceByMonth as |total|}}
-      <div class="table-column">{{format-money total}}</div>
-    {{/each}}
-    <div class="table-column"></div>
-  </li>
-  <li class="table-row">
-    <div class="table-column">
-      Remaining Income
-    </div>
-    {{#each this.monthlyRemainingIncome as |monthlyIncome|}}
-      <div class="table-column">
-        <b>{{format-money monthlyIncome}}</b>
-      </div>
-    {{/each}}
-    <div class="table-column">
-      <b>{{format-money this.totalRemainingIncome}}</b>
-    </div>
-  </li>
-  <li class="table-row">
-    <div class="table-column">
-      Remaining credit debt
-    </div>
-    {{#each this.totalCreditDebtByMonth as |debt|}}
-      <div class="table-column">
-        <b>{{format-money debt}}</b>
-      </div>
-    {{/each}}
-    <div class="table-column"></div>
-  </li>
-  <li class="table-row">
-    <div class="table-column">
-      Remaining total debt
-    </div>
-    {{#each this.totalDebtByMonth as |debt|}}
-      <div class="table-column">
-        <b>{{format-money debt}}</b>
-      </div>
-    {{/each}}
-    <div class="table-column"></div>
-  </li>
+  <ProjectedBalanceTable::Row::Totals
+    @totalCreditPaymentsByMonth={{this.totalCreditPaymentsByMonth}}
+    @overallCreditTotal={{this.overallCreditTotal}}
+    @totalsByMonth={{this.totalsByMonth}}
+    @overallTotal={{this.overallTotal}}
+  />
+  <ProjectedBalanceTable::Row::Totals::Differences
+    @totalDifferenceByMonth={{this.totalDifferenceByMonth}}
+  />
+  <ProjectedBalanceTable::Row::Totals::Income
+    @monthlyRemainingIncome={{this.monthlyRemainingIncome}}
+    @totalRemainingIncome={{this.totalRemainingIncome}}
+  />
+  <ProjectedBalanceTable::Row::Totals::CreditDebt
+    @totalCreditDebtByMonth={{this.totalCreditDebtByMonth}}
+  />
+  <ProjectedBalanceTable::Row::Totals::Debt
+    @totalDebtByMonth={{this.totalDebtByMonth}}
+  />
 </ul>

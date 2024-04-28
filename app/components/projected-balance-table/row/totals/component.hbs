@@ -1,0 +1,32 @@
+<li class="table-row">
+  <div class="table-column">
+    <b>Total credit pmts</b>
+  </div>
+  {{#each @totalCreditPaymentsByMonth as |pmt|}}
+    <div class="table-column">
+      <b>
+        {{format-money pmt}}
+      </b>
+    </div>
+  {{/each}}
+  <div class="table-column">
+    <b>
+      {{format-money @overallCreditTotal}}
+    </b>
+  </div>
+</li>
+<li class="table-row">
+  <div class="table-column">
+    <b>Total Pmts</b>
+  </div>
+  {{#each @totalsByMonth as |monthlyTotal|}}
+    <div class="table-column">
+      <b>
+        {{format-money monthlyTotal}}
+      </b>
+    </div>
+  {{/each}}
+  <div class="table-column">
+    <b>{{format-money @overallTotal}}</b>
+  </div>
+</li>

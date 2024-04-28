@@ -1,0 +1,11 @@
+<li class="table-row">
+  <div class="table-column">
+    Remaining credit debt
+  </div>
+  {{#each @totalCreditDebtByMonth as |debt|}}
+    <div class="table-column">
+      <b>{{format-money debt}}</b>
+    </div>
+  {{/each}}
+  <div class="table-column"></div>
+</li>
