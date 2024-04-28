@@ -1,6 +1,6 @@
 <ul class="data-table projected-balance row-highlights" data-test-projected-balance-table>
   <ProjectedBalanceTable::Header
-    @month={{this.months}}
+    @months={{this.months}}
   />
   {{#each this.accountsByMonth as |account|}}
     <ProjectedBalanceTable::Row::Account @account={{account}} />
